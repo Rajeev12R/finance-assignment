@@ -5,6 +5,10 @@ import { generateToken } from "../utils/jwt.js";
 const registerUser = async(data) => {
     const {name, email, password} = data;
 
+    if (!name || !email || !password) {
+        throw new Error("Missing required fields");
+    }
+
     const existUser = await User.findOne({email});
     if(existUser) throw new Error("User already exists");
 
