@@ -23,7 +23,27 @@ const getAllRecordsService = async (filters) => {
     if(filters.type) query.type = filters.type;
     if(filters.category) query.category = filters.category;
 
-    return await FinancialRecord.find(query).populate("createdBy", "name, email").sort({date: -1});
+    if(filters.startDate) query.date.$gte = new Date(filters.startDate);
+    if(filters.endDate) query.date.$lte = new Date(filters.endDate);
+
+    const page = parseInt(filters.page) || 1;
+    const limit = parseInt(filters.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const records = await FinancialRecord.find(query)
+    .populate("createdBy", "name, email")
+    .sort({date: -1})
+    .skip(skip)
+    .limit(limit);
+
+    const total = await FinancialRecord.countDocuments(query);
+
+    return{
+        total,
+        page,
+        limit,
+        records
+    };
 }
 
 const getRecordByIdService = async (id) => {
@@ -34,7 +54,7 @@ const updateRecordService = async (id, updateData) => {
     return await FinancialRecord.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
 };
 
-export const deleteRecordService = async (id) => {
+const deleteRecordService = async (id) => {
     return await FinancialRecord.findByIdAndDelete(id);
 };
 

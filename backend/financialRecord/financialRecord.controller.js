@@ -15,7 +15,7 @@ const getFinancialRecords = async(req, res) => {
     try {
         const records = await getAllRecordsService(req.query);
 
-        res.status(200).json({success: true,count: records.length, data: records});
+        res.status(200).json({success: true, ...records});
     } catch (error) {
         res.status(500).json({success: false, message: "Server Error", error: error.message})
     }
@@ -51,7 +51,7 @@ const updateFinancialRecord = async (req, res) => {
     }    
 }
 
-export const deleteFinancialRecord = async (req, res) => {
+const deleteFinancialRecord = async (req, res) => {
     try {
         const deletedRecord = await deleteRecordService(req.params.id);
 

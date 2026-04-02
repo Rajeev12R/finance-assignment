@@ -4,14 +4,19 @@ dotenv.config();
 import express from "express";
 import connectDB from "./config/db.js";
 
-//Routes
+import cors from "cors";
 import authRoute from "./auth/auth.route.js"
+import recordRoute from "./financialRecord/financialRecord.routes.js"
 
 const port = process.env.PORT || 3000;
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/api/auth', authRoute);
+app.use('/api/financialRecord', recordRoute);
 
 
 
