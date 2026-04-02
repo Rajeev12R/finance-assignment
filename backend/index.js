@@ -1,0 +1,21 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
+import connectDB from "./config/db.js";
+
+const port = process.env.PORT || 3000;
+const app = express();
+
+app.use(express.json());
+
+app.get('/health', (req, res) => {
+    res.send("Health is OK. Backend running.")
+})
+
+app.listen((port), () => {
+    connectDB();
+    console.log(`Server Started at PORT: http://localhost:${port}`);
+})
+
+
