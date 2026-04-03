@@ -2,7 +2,7 @@ import FinancialRecord from "../financialRecord/FinancialRecord.js";
 
 const buildFilters = (user, filters) => {
     const { startDate, endDate } = filters;
-    const match = {};
+    const match = { isDeleted: false };
 
     if (user.role !== "admin") {
         match.createdBy = user._id;
