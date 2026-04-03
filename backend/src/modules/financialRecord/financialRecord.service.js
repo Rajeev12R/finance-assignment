@@ -18,7 +18,7 @@ const createRecordService = async (recordData, userId) => {
 }
 
 const getAllRecordsService = async (filters) => {
-    const query = {};
+    const query = { isDeleted: false };
 
     if (filters.type) query.type = filters.type;
     if (filters.category) query.category = filters.category;
@@ -27,6 +27,10 @@ const getAllRecordsService = async (filters) => {
         query.date = {};
         if (filters.startDate) query.date.$gte = new Date(filters.startDate);
         if (filters.endDate) query.date.$lte = new Date(filters.endDate);
+    }
+
+    if (filters.search) {
+        query.notes = { $regex: filters.search, $options: "i" };
     }
 
     const page = parseInt(filters.page) || 1;
@@ -50,15 +54,15 @@ const getAllRecordsService = async (filters) => {
 }
 
 const getRecordByIdService = async (id) => {
-    return await FinancialRecord.findById(id).populate("createdBy", "name email");
+    return await FinancialRecord.findOne({ _id: id, isDeleted: false }).populate("createdBy", "name email");
 };
 
 const updateRecordService = async (id, updateData) => {
-    return await FinancialRecord.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+    return await FinancialRecord.findOneAndUpdate({ _id: id, isDeleted: false }, updateData, { new: true, runValidators: true });
 };
 
 const deleteRecordService = async (id) => {
-    return await FinancialRecord.findByIdAndDelete(id);
+    return await FinancialRecord.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
 };
 
 export { createRecordService, getAllRecordsService, getRecordByIdService, updateRecordService, deleteRecordService };
