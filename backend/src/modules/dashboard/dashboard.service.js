@@ -127,4 +127,11 @@ const getMonthlyTrendsService = async (user, filters) => {
     ])
 }
 
-export { getSummaryService, getCategoryBreakdownService, getMonthlyTrendsService }; 
+const getRecentActivityService = async (user, limit = 5) => {
+    const match = buildFilters(user, {});
+    return await FinancialRecord.find(match)
+        .sort({ date: -1, createdAt: -1 })
+        .limit(limit);
+}
+
+export { getSummaryService, getCategoryBreakdownService, getMonthlyTrendsService, getRecentActivityService };

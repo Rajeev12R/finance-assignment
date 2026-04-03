@@ -1,4 +1,4 @@
-import { getSummaryService, getCategoryBreakdownService, getMonthlyTrendsService} from "./dashboard.service.js";
+import { getSummaryService, getCategoryBreakdownService, getMonthlyTrendsService, getRecentActivityService } from "./dashboard.service.js";
 
 const getSummary = async (req, res, next) => {
     try {
@@ -30,4 +30,13 @@ const getMonthlyTrends = async (req, res, next) => {
     }
 };
 
-export {getSummary, getCategoryBreakdown, getMonthlyTrends};
+const getRecentActivity = async (req, res, next) => {
+    try {
+        const data = await getRecentActivityService(req.user);
+        res.status(200).json({ success: true, data });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export {getSummary, getCategoryBreakdown, getMonthlyTrends, getRecentActivity};
