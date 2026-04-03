@@ -107,11 +107,15 @@ const getMonthlyTrendsService = async (user, filters) => {
             $project: {
                 _id: 0,
                 month: {
-                    $concat: [
-                        { $toString: "$_id.year" },
-                        "-",
-                        { $toString: "$_id.month" }
-                    ]
+                    $dateToString: {
+                        format: "%Y-%m",
+                        date: {
+                            $dateFromParts: {
+                                year: "$_id.year",
+                                month: "$_id.month"
+                            }
+                        }
+                    }
                 },
                 income: 1,
                 expense: 1

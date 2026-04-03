@@ -1,32 +1,32 @@
 import { getSummaryService, getCategoryBreakdownService, getMonthlyTrendsService} from "./dashboard.service.js";
 
-const getSummary = async (req, res) => {
+const getSummary = async (req, res, next) => {
     try {
         const { startDate, endDate } = req.query;
         const data = await getSummaryService(req.user, { startDate, endDate });
         res.status(200).json({success: true, data});
     } catch (err) {
-        res.status(500).json({success: false, message: err.message});
+        next(err);
     }
 };
 
-const getCategoryBreakdown = async (req, res) => {
+const getCategoryBreakdown = async (req, res, next) => {
     try {
         const { startDate, endDate } = req.query;
         const data = await getCategoryBreakdownService(req.user, { startDate, endDate });
         res.status(200).json({success: true, data});
     } catch (err) {
-        res.status(500).json({success: false, message: err.message});
+        next(err);
     }
 };
 
-const getMonthlyTrends = async (req, res) => {
+const getMonthlyTrends = async (req, res, next) => {
     try {
         const { startDate, endDate } = req.query;
         const data = await getMonthlyTrendsService(req.user, { startDate, endDate });
         res.status(200).json({success: true, data});
     } catch (err) {
-        res.status(500).json({success: false, message: err.message});
+        next(err);
     }
 };
 
