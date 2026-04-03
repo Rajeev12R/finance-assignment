@@ -23,8 +23,11 @@ const getAllRecordsService = async (filters) => {
     if (filters.type) query.type = filters.type;
     if (filters.category) query.category = filters.category;
 
-    if (filters.startDate) query.date.$gte = new Date(filters.startDate);
-    if (filters.endDate) query.date.$lte = new Date(filters.endDate);
+    if (filters.startDate || filters.endDate) {
+        query.date = {};
+        if (filters.startDate) query.date.$gte = new Date(filters.startDate);
+        if (filters.endDate) query.date.$lte = new Date(filters.endDate);
+    }
 
     const page = parseInt(filters.page) || 1;
     const limit = parseInt(filters.limit) || 10;

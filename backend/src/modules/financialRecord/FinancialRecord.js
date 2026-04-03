@@ -34,5 +34,8 @@ const financialRecordSchema = new mongoose.Schema({
     timestamps: true 
 });
 
+financialRecordSchema.index({ createdBy: 1 });
+financialRecordSchema.index({ date: -1 });
+
 const FinancialRecord = mongoose.model("FinancialRecord", financialRecordSchema);
 export default FinancialRecord;
