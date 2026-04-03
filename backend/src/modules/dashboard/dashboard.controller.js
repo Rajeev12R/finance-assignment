@@ -2,7 +2,8 @@ import { getSummaryService, getCategoryBreakdownService, getMonthlyTrendsService
 
 const getSummary = async (req, res) => {
     try {
-        const data = await getSummaryService();
+        const { startDate, endDate } = req.query;
+        const data = await getSummaryService(req.user, { startDate, endDate });
         res.status(200).json({success: true, data});
     } catch (err) {
         res.status(500).json({success: false, message: err.message});
@@ -11,7 +12,8 @@ const getSummary = async (req, res) => {
 
 const getCategoryBreakdown = async (req, res) => {
     try {
-        const data = await getCategoryBreakdownService();
+        const { startDate, endDate } = req.query;
+        const data = await getCategoryBreakdownService(req.user, { startDate, endDate });
         res.status(200).json({success: true, data});
     } catch (err) {
         res.status(500).json({success: false, message: err.message});
@@ -20,7 +22,8 @@ const getCategoryBreakdown = async (req, res) => {
 
 const getMonthlyTrends = async (req, res) => {
     try {
-        const data = await getMonthlyTrendsService();
+        const { startDate, endDate } = req.query;
+        const data = await getMonthlyTrendsService(req.user, { startDate, endDate });
         res.status(200).json({success: true, data});
     } catch (err) {
         res.status(500).json({success: false, message: err.message});

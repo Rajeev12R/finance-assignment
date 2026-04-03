@@ -1,7 +1,27 @@
 import FinancialRecord from "../financialRecord/FinancialRecord.js";
 
-const getSummaryService = async () => {
+const buildFilters = (user, filters) => {
+    const { startDate, endDate } = filters;
+    const match = {};
+
+    if (user.role !== "admin") {
+        match.createdBy = user._id;
+    }
+
+    if (startDate || endDate) {
+        match.date = {};
+        if (startDate) match.date.$gte = new Date(startDate);
+        if (endDate) match.date.$lte = new Date(endDate);
+    }
+
+    return match;
+};
+
+const getSummaryService = async (user, filters) => {
+    const match = buildFilters(user, filters);
+
     const summary = await FinancialRecord.aggregate([
+        { $match: match },
         {
             $group: {
                 _id: "$type",
@@ -21,8 +41,11 @@ const getSummaryService = async () => {
     }
 }
 
-const getCategoryBreakdownService = async () => {
+const getCategoryBreakdownService = async (user, filters) => {
+    const match = buildFilters(user, filters);
+
     return await FinancialRecord.aggregate([
+        { $match: match },
         {
             $group: {
                 _id: "$category",
@@ -39,8 +62,11 @@ const getCategoryBreakdownService = async () => {
     ])
 }
 
-const getMonthlyTrendsService = async () => {
+const getMonthlyTrendsService = async (user, filters) => {
+    const match = buildFilters(user, filters);
+
     return FinancialRecord.aggregate([
+        { $match: match },
         {
             $group: {
                 _id: {
