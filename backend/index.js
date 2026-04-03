@@ -2,11 +2,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-import connectDB from "./config/db.js";
+import connectDB from "./src/config/db.js";
 
 import cors from "cors";
-import authRoute from "./auth/auth.route.js"
-import recordRoute from "./financialRecord/financialRecord.routes.js"
+import authRoutes from "./auth/auth.route.js"
+import recordRoutes from "./src/modules/financialRecord/financialRecord.routes.js"
+import dashboardRoutes from "./src/modules/dashboard/dashboard.routes.js"
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -15,9 +16,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/auth', authRoute);
-app.use('/api/financialRecord', recordRoute);
-
+app.use('/api/auth', authRoutes);
+app.use('/api/records', recordRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 
 app.get('/health', (req, res) => {
