@@ -75,6 +75,8 @@ The backend follows a modular and layered architecture:
 
 ## API Documentation (Core Endpoints)
 
+> **View Published API Documentation**: [Postman Collection](https://documenter.getpostman.com/view/35962544/2sBXiqDoHT#intro)
+
 ### Authentication
 
 | Method | Endpoint             | Description                 |
@@ -102,11 +104,11 @@ The backend follows a modular and layered architecture:
 
 ### User Management (Admin Only)
 
-| Method  | Endpoint             | Description                       |
-| :------ | :------------------- | :-------------------------------- |
-| `GET`   | `/api/users`         | List all users (excluding passwords). |
-| `PATCH` | `/api/users/:id/role`   | Update a user's role.             |
-| `PATCH` | `/api/users/:id/status` | Update a user's account status.    |
+| Method  | Endpoint                | Description                           |
+| :------ | :---------------------- | :------------------------------------ |
+| `GET`   | `/api/users`            | List all users (excluding passwords). |
+| `PATCH` | `/api/users/:id/role`   | Update a user's role.                 |
+| `PATCH` | `/api/users/:id/status` | Update a user's account status.       |
 
 ## ⚙️ Development Setup
 
