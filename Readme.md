@@ -6,12 +6,10 @@ A backend system for managing financial records with role-based access control a
 
 The backend follows a modular and layered architecture:
 
-**Routes → Controllers → Services → Database**
+<img width="595" height="536" alt="Screenshot 2026-04-05 at 3 22 33 AM" src="https://github.com/user-attachments/assets/51095df1-364e-4b8b-85d8-96bc0da6c97c" />
 
-- **Controllers**: Handle HTTP request/response logic and input parsing.
-- **Services**: Encapsulate core business logic, data processing, and aggregations.
-- **Mongoose Models**: Manage data persistence, schema validation, and indexing.
-- **Middleware**: Handle cross-cutting concerns like authentication, RBAC, and rate limiting.
+
+
 
 ## Request Flow
 
