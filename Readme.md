@@ -100,6 +100,14 @@ The backend follows a modular and layered architecture:
 | `PUT`    | `/api/records/:id` | Update an entry (Admin only).                                                                      |
 | `DELETE` | `/api/records/:id` | Soft delete an entry (Admin only).                                                                 |
 
+### User Management (Admin Only)
+
+| Method  | Endpoint             | Description                       |
+| :------ | :------------------- | :-------------------------------- |
+| `GET`   | `/api/users`         | List all users (excluding passwords). |
+| `PATCH` | `/api/users/:id/role`   | Update a user's role.             |
+| `PATCH` | `/api/users/:id/status` | Update a user's account status.    |
+
 ## ⚙️ Development Setup
 
 1. **Clone the repository**.
